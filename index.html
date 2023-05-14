@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="last-updated"></div>
+    <button class="unit-switch">Unit Switch</button>
+    <div class="wrapper">
+      <div class="middle">
+        <h1 class="country"></h1>
+        <h2 class="city"></h2>
+        <p>Enter a city</p>
+        <input type="text" class="location-input" />
+        <button class="location-submit">Submit</button>
+        <p class="weather"></p>
+        <p class="temperature">
+          Current temperature is <span class="bold-span" id="temp"></span>
+        </p>
+        <p class="feels-like">
+          Feels like <span class="bold-span" id="feels"></span>
+        </p>
+        <div class="humidity">
+          <h2>Humidity</h2>
+          <p></p>
+        </div>
+        <div class="wind-speed">
+          <h2>Wind Speed</h2>
+          <p></p>
+        </div>
+      </div>
+    </div>
+    <div class="left"></div>
+  </body>
+</html>

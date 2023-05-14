@@ -1,0 +1,31 @@
+.middle{
+    display:flex;
+    flex-direction: column;
+    width: 30%;
+    justify-content: center;
+    align-items: center;
+}
+.location-submit{
+    margin-top: 10px;
+}
+.bold-span{
+    font-weight: bold;
+}
+body{
+    min-height: 100vh;
+    color: azure;
+    display:flex;
+    flex-direction: column;
+}
+.wrapper{
+    display:flex;
+    justify-content: center;
+}
+.last-updated{
+    text-align: end;
+}
+.left{
+    display:flex;
+    justify-content: space-between;
+    margin-top:auto
+}
