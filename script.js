@@ -9,10 +9,12 @@ let locationFetch = "london";
 const switchToC = () => {
   unitMode = "c";
   unitSym = "°C";
+  unitBtn.textContent = "°C";
 };
 const switchToF = () => {
   unitMode = "f";
   unitSym = "F";
+  unitBtn.textContent = "F";
 };
 
 const switchUnit = () => {
@@ -38,7 +40,7 @@ const fetchData = async () => {
 const getCurrentTemps = async () => {
   const data = await fetchData();
 
-  const currentWeather = data.current.condition.text;
+  const currentWeather = data.current.condition.icon;
 
   let currentTemp = "";
   let currentFeels = "";
@@ -83,31 +85,30 @@ const getWindSpeedData = async () => {
 };
 
 const renderMiddleDiv = async () => {
-  const countryDiv = document.querySelector(".country");
-  const cityDiv = document.querySelector(".city");
-  const weatherDiv = document.querySelector(".weather");
-  const boldSpanTemp = document.querySelector("#temp");
-  const boldSpanFeels = document.querySelector("#feels");
-  const lastUpdate = document.querySelector(".last-updated");
-
-  const location = await getLocation();
-  const currentTemps = await getCurrentTemps();
   const lastUpdateData = await getLastUpdate();
   const humidityData = await getHumidityData();
-  const windSpeedData = await getWindSpeedData();
 
+  const lastUpdate = document.querySelector(".last-updated");
   lastUpdate.textContent = `Last updated: ${lastUpdateData}`;
 
+  const location = await getLocation();
+  const countryDiv = document.querySelector(".country");
   countryDiv.textContent = location.country;
+  const cityDiv = document.querySelector(".city");
   cityDiv.textContent = location.city;
 
-  weatherDiv.textContent = `${currentTemps.currentWeather}`;
+  const currentTemps = await getCurrentTemps();
+  const weatherImg = document.querySelector(".weather");
+  weatherImg.src = `${currentTemps.currentWeather}`;
+  const boldSpanTemp = document.querySelector("#temp");
   boldSpanTemp.textContent = `${currentTemps.currentTemp}${unitSym}`;
+  const boldSpanFeels = document.querySelector("#feels");
   boldSpanFeels.textContent = `${currentTemps.currentFeels}${unitSym}`;
 
   const humidityP = document.querySelector(".humidity p");
   humidityP.textContent = `${humidityData}%`;
 
+  const windSpeedData = await getWindSpeedData();
   const windSpeedP = document.querySelector(".wind-speed p");
   windSpeedP.textContent = `${windSpeedData}kph`;
 };
@@ -142,25 +143,25 @@ unitBtn.addEventListener("click", async () => {
   switchUnit();
   await getCurrentTemps();
   await renderMiddleDiv();
-  await renderLeftDiv();
+  await renderBottomDiv();
 });
 
-locationSubmit.addEventListener("click", async () => {
+const renderOnLocationSubmit = async () => {
   changeLocation();
   await getCurrentTemps();
   await renderMiddleDiv();
   await setGradients();
   await setFavIcon();
-  await renderLeftDiv();
+  await renderBottomDiv();
+};
+
+locationSubmit.addEventListener("click", async () => {
+  await renderOnLocationSubmit();
 });
 
 addEventListener("keydown", async (e) => {
   if (e.key === "Enter") {
-    changeLocation();
-    await getCurrentTemps();
-    await renderMiddleDiv();
-    await setGradients();
-    await setFavIcon();
+    await renderOnLocationSubmit();
   }
 });
 
@@ -170,15 +171,15 @@ const getForecastTemps = (element) => {
     const minTemp = element.day.mintemp_c;
     return { maxTemp, minTemp };
   } else if (unitMode === "f") {
-    const maxTemp = element.day.maxtemp_c;
-    const minTemp = element.day.mintemp_c;
+    const maxTemp = element.day.maxtemp_f;
+    const minTemp = element.day.mintemp_f;
     return { maxTemp, minTemp };
   }
 };
 
-const renderLeftDiv = async () => {
-  const leftDiv = document.querySelector(".left");
-  leftDiv.innerHTML = "";
+const renderBottomDiv = async () => {
+  const bottomDiv = document.querySelector(".bottom");
+  bottomDiv.innerHTML = "";
 
   const data = await fetchData();
   const forecastArray = data.forecast.forecastday;
@@ -192,8 +193,8 @@ const renderLeftDiv = async () => {
     const dayH3 = document.createElement("h3");
     dayH3.textContent = date.toLocaleDateString("default", { weekday: "long" });
 
-    const dayCondition = document.createElement("p");
-    dayCondition.textContent = element.day.condition.text;
+    const dayCondition = document.createElement("img");
+    dayCondition.src = element.day.condition.icon;
 
     const dayMax = document.createElement("p");
     dayMax.textContent = `${getForecastTemps(element).maxTemp}${unitSym}`;
@@ -209,11 +210,11 @@ const renderLeftDiv = async () => {
     dayDiv.appendChild(dayMax);
     dayDiv.appendChild(dayMin);
     dayDiv.appendChild(chanceOfRain);
-    leftDiv.appendChild(dayDiv);
+    bottomDiv.appendChild(dayDiv);
   });
 };
 
-renderLeftDiv();
+renderBottomDiv();
 setFavIcon();
 setGradients();
 renderMiddleDiv();

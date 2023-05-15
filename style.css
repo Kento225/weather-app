@@ -1,12 +1,14 @@
 .middle{
-    display:flex;
+    display: flex;
     flex-direction: column;
-    width: 30%;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
 }
 .location-submit{
     margin-top: 10px;
+}
+
+#temp{
+font-size: 40px;
 }
 .bold-span{
     font-weight: bold;
@@ -16,16 +18,68 @@ body{
     color: azure;
     display:flex;
     flex-direction: column;
+    margin: 0px;
+    font-family: 'Pathway Extreme', sans-serif;
 }
 .wrapper{
     display:flex;
     justify-content: center;
+    align-items: center;
+    gap: 15px;
 }
 .last-updated{
     text-align: end;
 }
-.left{
+.bottom{
     display:flex;
     justify-content: space-between;
-    margin-top:auto
+    margin-top:auto;
+    overflow-x: scroll;
+    flex-shrink: 1 0 auto;
 }
+.day{
+    background-color: rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 13%;
+    border-radius: 10px;
+    min-width: 120px;
+    flex-shrink: 0;
+    }
+
+.unit-switch{
+        border-radius: 15px;
+        width: 100px;
+        height:40px;
+        background: transparent;
+        border:solid 2px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        margin: 20px;
+        font-weight: bold;
+        font-size: 15px;
+        text-align: center;
+    }
+.weather{
+        width: 70px;
+    }
+.top{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+
+    }
+.top p{
+        margin: 0;
+        text-align: center;
+    }
+.location-input{
+        width: 200px;
+    }
+.location-wrapper{
+        display:flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+.right, .left{
+        margin-top: 150px;
+    }

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=Pathway+Extreme:wght@400;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,32 +12,40 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="last-updated"></div>
-    <button class="unit-switch">Unit Switch</button>
+    <div class="top">
+        <button class="unit-switch">°C</button>
+        <div class="last-updated"></div>
+    </div>
     <div class="wrapper">
-      <div class="middle">
-        <h1 class="country"></h1>
-        <h2 class="city"></h2>
-        <p>Enter a city</p>
-        <input type="text" class="location-input" />
-        <button class="location-submit">Submit</button>
-        <p class="weather"></p>
-        <p class="temperature">
-          Current temperature is <span class="bold-span" id="temp"></span>
-        </p>
-        <p class="feels-like">
-          Feels like <span class="bold-span" id="feels"></span>
-        </p>
+        <div class="left">
         <div class="humidity">
           <h2>Humidity</h2>
           <p></p>
         </div>
+        </div>
+      <div class="middle">
+        <h1 class="country"></h1>
+        <h2 class="city"></h2>
+        <div class="img-wrapper"><img class="weather"></img></div>
+          <span class="bold-span" id="temp"></span>
+        <p class="feels-like">
+          Feels like <span class="bold-span" id="feels"></span>
+        </p>
+      </div>
+        <div class="right">
         <div class="wind-speed">
           <h2>Wind Speed</h2>
           <p></p>
         </div>
-      </div>
+        </div>
     </div>
-    <div class="left"></div>
+        <div class="location-wrapper">
+            <div class="location">
+            <p>Enter a location</p>
+            <input type="text" class="location-input" />
+            <button class="location-submit">Submit</button>
+            </div>
+        </div>
+    <div class="bottom"></div>
   </body>
 </html>
