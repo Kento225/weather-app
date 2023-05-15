@@ -83,3 +83,6 @@ body{
 .right, .left{
         margin-top: 150px;
     }
+.wind-speed p{
+    text-align: end;
+}
