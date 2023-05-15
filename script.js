@@ -29,7 +29,7 @@ const switchUnit = () => {
 
 const fetchData = async () => {
   const info = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=58c780e453c543619b4153834231205&days=7&q=${locationFetch}`
+    `https://api.weatherapi.com/v1/forecast.json?key=58c780e453c543619b4153834231205&days=7&q=${locationFetch}`
   );
   const infoJson = await info.json();
   console.log(infoJson);
