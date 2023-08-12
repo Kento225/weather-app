@@ -1,0 +1,13 @@
+Clear -     background: rgb(0, 75, 156);
+            background: linear-gradient(315deg, rgba(0, 75, 156, 1) 53%, rgba(191, 213, 219, 1) 100%);
+
+Sunny -     background: rgb(156, 108, 0);
+            background: linear-gradient(315deg, rgba(156, 108, 0, 1) 53%, rgba(191, 213, 219, 1) 100%);
+
+Cloudy -    background: rgb(143,163,186);
+            background: linear-gradient(315deg, rgba(143,163,186,1) 26%, rgba(191,213,219,1) 100%); 
+
+Partly Cloudy -  background: rgb(133,174,221);
+                 background: linear-gradient(315deg, rgba(133,174,221,1) 26%, rgba(191,213,219,1) 100%); 
+
+

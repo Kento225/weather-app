@@ -6,6 +6,8 @@ let unitMode = "c";
 let unitSym = "°C";
 let locationFetch = "london";
 
+let infoJson = "";
+
 const switchToC = () => {
   unitMode = "c";
   unitSym = "°C";
@@ -31,56 +33,49 @@ const fetchData = async () => {
   const info = await fetch(
     `https://api.weatherapi.com/v1/forecast.json?key=58c780e453c543619b4153834231205&days=7&q=${locationFetch}`
   );
-  const infoJson = await info.json();
-  console.log(infoJson);
-
-  return await infoJson;
+  infoJson = await info.json();
+  console.log(info);
 };
 
 const getCurrentTemps = async () => {
-  const data = await fetchData();
-
-  const currentWeather = data.current.condition.icon;
+  const currentWeather = await infoJson.current.condition.icon;
 
   let currentTemp = "";
   let currentFeels = "";
 
   if (unitMode === "c") {
-    currentTemp = data.current.temp_c;
-    currentFeels = data.current.feelslike_c;
+    currentTemp = await infoJson.current.temp_c;
+    currentFeels = await infoJson.current.feelslike_c;
   } else if (unitMode === "f") {
-    currentTemp = data.current.temp_f;
-    currentFeels = data.current.feelslike_f;
+    currentTemp = await infoJson.current.temp_f;
+    currentFeels = await infoJson.current.feelslike_f;
   }
   return { currentWeather, currentTemp, currentFeels };
 };
 
-const changeLocation = () => {
+const changeLocation = async () => {
   locationFetch = locationInput.value;
+  await fetchData();
   locationInput.value = "";
 };
 
 const getLocation = async () => {
-  const data = await fetchData();
-  const city = data.location.name;
-  const country = data.location.country;
+  const city = await infoJson.location.name;
+  const country = await infoJson.location.country;
   return { city, country };
 };
 
 const getLastUpdate = async () => {
-  const data = await fetchData();
-  const lastUpdateData = data.current.last_updated;
+  const lastUpdateData = await infoJson.current.last_updated;
   return lastUpdateData;
 };
 
 const getHumidityData = async () => {
-  const data = await fetchData();
-  const humidityData = data.current.humidity;
+  const humidityData = await infoJson.current.humidity;
   return humidityData;
 };
 const getWindSpeedData = async () => {
-  const data = await fetchData();
-  const windSpeedData = data.current.wind_kph;
+  const windSpeedData = await infoJson.current.wind_kph;
   return windSpeedData;
 };
 
@@ -116,21 +111,19 @@ const renderMiddleDiv = async () => {
 const setFavIcon = async () => {
   const head = document.querySelector("head");
 
-  const data = await fetchData();
   const link =
     document.querySelector("link[rel*='icon']") ||
     document.createElement("link");
   link.type = "image/x-icon";
   link.rel = "shortcut icon";
-  link.href = data.current.condition.icon;
+  link.href = await infoJson.current.condition.icon;
   head.appendChild(link);
 };
 
 const setGradients = async () => {
   const body = document.querySelector("body");
 
-  const data = await fetchData();
-  const currentWeather = data.current.condition.text;
+  const currentWeather = await infoJson.current.condition.text;
 
   weatherGradients.forEach((element) => {
     if (element.condition === currentWeather) {
@@ -147,7 +140,7 @@ unitBtn.addEventListener("click", async () => {
 });
 
 const renderOnLocationSubmit = async () => {
-  changeLocation();
+  await changeLocation();
   await getCurrentTemps();
   await renderMiddleDiv();
   await setGradients();
@@ -181,11 +174,9 @@ const renderBottomDiv = async () => {
   const bottomDiv = document.querySelector(".bottom");
   bottomDiv.innerHTML = "";
 
-  const data = await fetchData();
-  const forecastArray = data.forecast.forecastday;
+  const forecastArray = await infoJson.forecast.forecastday;
   forecastArray.forEach((element) => {
     const date = new Date(element.date);
-    console.log(date);
 
     const dayDiv = document.createElement("div");
     dayDiv.classList.add("day");
@@ -214,11 +205,14 @@ const renderBottomDiv = async () => {
   });
 };
 
-renderBottomDiv();
-setFavIcon();
-setGradients();
-renderMiddleDiv();
-getCurrentTemps();
+const initialRender = async () => {
+  await fetchData();
+  await renderBottomDiv();
+  await setFavIcon();
+  await setGradients();
+  await renderMiddleDiv();
+  await getCurrentTemps();
+};
 
 const weatherGradients = [
   {
@@ -287,3 +281,5 @@ const weatherGradients = [
       "linear-gradient(315deg, rgba(182,89,19,1) 0%, rgba(100,80,124,1) 100%)",
   },
 ];
+
+initialRender();
